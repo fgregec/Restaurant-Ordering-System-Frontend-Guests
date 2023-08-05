@@ -1,0 +1,18 @@
+<div class="d-flex justify-content-center align-items-center flex-column m-5">
+    <h1>REGISTRATION FORM</h1>
+    <form [formGroup]="registerForm" (ngSubmit)="register()">
+        <div class="d-flex flex-column">
+            <label style="font-size: 1.5em;">First name:</label>
+            <input type="text" name="" class="form-control" formControlName="firstName">
+            <label style="font-size: 1.5em;">Last name:</label>
+            <input type="text" name="" class="form-control" formControlName="lastName">
+            <label style="font-size: 1.5em;">Email:</label>
+            <input type="text" name="" class="form-control" formControlName="email">
+            <label style="font-size: 1.5em;">Password:</label>
+            <input type="password" name="" class="form-control" formControlName="password">
+            <label style="font-size: 1.5em;">Phone Number:</label>
+            <input type="text" name="" class="form-control" formControlName="phoneNumber">
+        </div>
+        <button class="btn btn-secondary m-2">REGISTER</button>
+    </form>
+</div>

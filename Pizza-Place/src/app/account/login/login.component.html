@@ -1,0 +1,13 @@
+<div class="d-flex justify-content-center align-items-center flex-column m-5">
+    <h1>LOGIN FORM</h1>
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
+      <div class="d-flex flex-column">
+        <label style="font-size: 1.5em;">Email:</label>
+        <input formControlName="email" type="text" name="" class="form-control">
+        <label style="font-size: 1.5em;">Password:</label>
+        <input formControlName="password" type="password" name="" class="form-control">
+      </div>
+      <button class="btn btn-secondary m-2" type="submit">LOGIN</button>
+    </form>
+  </div>
+  
