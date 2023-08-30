@@ -1,0 +1,35 @@
+.menu-item {
+    display: flex;
+    width: 100%;
+    max-width: 500px;
+}
+
+.menu-item-image {
+    margin-right: 10px;
+}
+
+.menu-item-image img {
+    width: 200px;
+}
+
+.menu-item-details {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    margin-left: 10px;
+}
+
+.menu-item-title {
+    margin: 0;
+}
+
+.menu-item-description {
+    margin: 0;
+    font-size: 14px;
+}
+
+.menu-item-buttons {
+    margin-top: 10px;
+}
+
+/* Add any other necessary styles */

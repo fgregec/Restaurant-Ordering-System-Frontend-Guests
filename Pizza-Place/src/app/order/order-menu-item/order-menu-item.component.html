@@ -1,0 +1,42 @@
+<div class="menu-item" *ngIf="menuItem">
+    <figure class="menu-item-image">
+        <img src="../../assets/menu/margherita.jpg" alt="Margherita Pizza">
+    </figure>
+    <div class="menu-item-details">
+        <div class="menu-item-text">
+            <h3 class="menu-item-title">{{menuItem.name}}</h3>
+        </div>
+        <div class="menu-item-buttons">
+            <button class="btn btn-primary" (click)="openModal(template)">Edit Ingredients</button>
+        </div>
+        <div class="menu-item-buttons w-50">
+          <label>Quantity:</label>
+          <input type="number" class="form-control">
+        </div>
+    </div>
+</div>
+
+<ng-template #template>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Edit Ingredients</h4>
+      <button type="button" class="close btn-close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body d-flex">
+      <div class="d-flex flex-column col-6">
+        <h4>Existing:</h4>
+        <div *ngFor="let ingredient of ingredients">
+          <button class="btn btn-primary" (click)="removeIngredient(ingredient)">{{ingredient.name}}</button>
+        </div>
+      </div>
+      <div class="col-6 d-flex flex-column">
+        <div>
+          <h4>Removed:</h4>
+          <div *ngFor="let removedIngredient of removedIngredients">
+            <button class="btn btn-warning" (click)="addBackIngredient(removedIngredient)">{{removedIngredient.name}}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
