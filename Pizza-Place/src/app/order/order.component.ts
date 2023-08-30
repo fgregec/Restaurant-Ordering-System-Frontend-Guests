@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { OrderService } from './order.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { TabsModule, TabsetComponent } from 'ngx-bootstrap/tabs';
 import { AbstractControl, UntypedFormControl } from '@angular/forms';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -16,14 +17,21 @@ import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
   styleUrls: ['./order.component.css']
 })
 export class OrderComponent implements OnInit {
+  
+  @ViewChild('people') people!:ElementRef;
+  @ViewChild('error') error!:ElementRef;
 
-  @ViewChild('staticTabs', { static: false }) staticTabs?: TabsetComponent;
+  @ViewChild('staticTabs', { static: false }) staticTabs!: TabsetComponent;
   bsConfig?: Partial<BsDatepickerConfig>;
+
+  showErrorAlert?: boolean = false;
+  emptyOrderAlert?: boolean = false;
 
   myTime: Date = new Date();
   minTime: Date = new Date();
   maxTime: Date = new Date();
 
+  selectedDate?: Date;
   bsValue = new Date();
   bsRangeValue: Date[];
   maxDate = new Date();
@@ -34,14 +42,19 @@ export class OrderComponent implements OnInit {
   selectedTime?: number;
   timeNow: Date = new Date();
 
+  errorMessage?: string;
 
-  constructor(private orderService: OrderService, private router: Router, private title: Title, private http: HttpClient){
+  handler:any = null;
+
+
+  constructor(private orderService: OrderService, private router: Router, private title: Title, private http: HttpClient, private toastr: ToastrService){
     this.title.setTitle('Order');
 
     this.maxDate.setDate(this.maxDate.getDate() + 7);
     this.bsRangeValue = [this.bsValue, this.maxDate];
     this.bsConfig = {
       minDate: new Date(), // Set the minimum date to today
+      showWeekNumbers: false,
     };
 
     this.myTime.setHours(10);
@@ -64,14 +77,62 @@ export class OrderComponent implements OnInit {
     });
   }
 
+  ngAfterViewInit(): void {
+    if (this.staticTabs) {
+      this.staticTabs.tabs[1].disabled = true;
+      this.staticTabs.tabs[2].disabled = true;
+    }
+  }
+
+  onValueChange(value: Date): void {
+    this.selectedDate = value;
+  }
+
   validateTable(){
     this.timeNow = new Date();
-    if (this.timeNow.getHours() == this.myTime.getHours()) {
-      console.log('You can order!')
+    const timeNowNumber: number = this.timeNow.getHours() + 1;
+
+    if(this.people.nativeElement.value <= 0){
+      this.showErrorAlert = true;
+      this.errorMessage = 'Number of people can not be 0';
+      return;
+    } else{
+      this.showErrorAlert = false;
     }
-    console.log(this.myTime.getHours());
-    console.log(this.timeNow.getHours());
+
+    if(!this.selectedDate){
+      this.showErrorAlert = true;
+      this.errorMessage = 'Please select a date!';
+      return;
+    } else{
+      this.showErrorAlert = false;
+    }
+
+    if(this.myTime.getHours() < timeNowNumber){
+      this.showErrorAlert = true;
+      this.errorMessage = 'You have to order 1 hour in advance!';
+      return;
+    } else {
+      this.showErrorAlert = false;
+    }
+
+    this.staticTabs.tabs[0].disabled = !this.staticTabs.tabs[0].disabled;
+    this.staticTabs.tabs[1].disabled = false;
+    this.staticTabs.tabs[1].active = true; 
   }
+
+  validateMenu(){
+    if (this.pickedMenuItems && this.pickedMenuItems.length <= 0) {
+      this.emptyOrderAlert = true;
+      return;
+    } else {
+      this.emptyOrderAlert = false;
+    }
+
+    this.staticTabs.tabs[1].disabled = !this.staticTabs.tabs[1].disabled;
+    this.staticTabs.tabs[2].disabled = false;
+    this.staticTabs.tabs[2].active = true; 
+   }
 
   handleOrderAdded(item: MenuItem){
     if(item){
@@ -80,11 +141,7 @@ export class OrderComponent implements OnInit {
     }
   }
 
-  disableEnable() {
-    if (this.staticTabs?.tabs[2]) {
-      this.staticTabs.tabs[2].disabled = !this.staticTabs.tabs[2].disabled;
-    }
-  }
+
 
 
 }

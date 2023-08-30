@@ -2,6 +2,10 @@ import { Component, Input, TemplateRef } from '@angular/core';
 import { MenuItem, Ingredient } from 'src/app/shared/models/guestOrder';
 import { OrderService } from '../order.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ChangeDetectorRef } from '@angular/core';
+
+import { shareReplay } from 'rxjs';
 
 
 @Component({
@@ -13,7 +17,7 @@ export class OrderMenuItemComponent {
   @Input() menuItem! : MenuItem;
   
   ingredients?: Ingredient[];
-  quantity?: number;
+  quantity?: number = 1;
   removedIngredients?: Ingredient[] = [];
 
   modalRef?: BsModalRef;
@@ -22,8 +26,13 @@ export class OrderMenuItemComponent {
     ignoreBackdropClick: false
   };
 
-  constructor(private orderService: OrderService, private modalService: BsModalService){}
+  constructor(private orderService: OrderService, private modalService: BsModalService, private cdRef: ChangeDetectorRef) {}
   
+  menuForm = new FormGroup({
+    quantity: new FormControl('', [Validators.required]),
+  });
+
+
   ngOnInit(): void {
     if (this.menuItem) {
       this.orderService.getMenuIngredients(this.menuItem.id).subscribe({
@@ -37,20 +46,25 @@ export class OrderMenuItemComponent {
           console.log('Observable completed.');
         }
       });
+
+      this.menuForm.controls['quantity'].valueChanges.subscribe((newValue) => {
+        this.quantity = newValue !== null ? parseInt(newValue, 10) : 0;
+        if(this.quantity <= 0){
+          this.quantity = 1;
+          this.menuForm.controls['quantity'].setValue('1');
+        }
+      });
     }
   }
 
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template, this.config);
-    console.log(this.ingredients)
   }
 
   removeIngredient(ingredient: Ingredient){
     if(ingredient && this.ingredients){
       this.removedIngredients?.push(ingredient);
       this.ingredients = this.ingredients.filter(item => item !== ingredient);
-      console.log('Removing ingredient' + ingredient);
-      console.log('All ingredients: ' + this.ingredients);
     }
   }
 
@@ -58,8 +72,6 @@ export class OrderMenuItemComponent {
     if(ingredient && this.removedIngredients){
       this.ingredients?.push(ingredient);
       this.removedIngredients = this.removedIngredients.filter(item => item !== ingredient);
-      console.log('Adding back' + ingredient);
-      console.log('All ingredients: ' + this.ingredients);
     }
   }
 }

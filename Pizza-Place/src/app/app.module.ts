@@ -19,6 +19,9 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
+import { AlertModule } from 'ngx-bootstrap/alert';
+import { NgxStripeModule } from 'ngx-stripe';
+import { StripeComponent } from './stripe/stripe.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +32,8 @@ import { TimepickerModule } from 'ngx-bootstrap/timepicker';
     RegisterComponent,
     OrderComponent,
     MenuItemComponent,
-    OrderMenuItemComponent
+    OrderMenuItemComponent,
+    StripeComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,7 +47,9 @@ import { TimepickerModule } from 'ngx-bootstrap/timepicker';
     TabsModule.forRoot(),
     BsDatepickerModule.forRoot(),
     BrowserAnimationsModule,
-    TimepickerModule.forRoot()
+    TimepickerModule.forRoot(),
+    AlertModule.forRoot(),
+    NgxStripeModule.forRoot('pk_test_51MVytIFqBUpBtecpTPEEyF8CTV2ucDbGPj5iJmWteNhokAsk2SI7D1ihiY5ZRGhRefnfQb6OWqHNDX3Ti1CBOx6s00kfJu7ZOU'),
   ],
   providers: [],
   bootstrap: [AppComponent]
