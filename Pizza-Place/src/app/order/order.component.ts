@@ -1,14 +1,13 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { OrderService } from './order.service';
 import { Router } from '@angular/router';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
 import { MenuItem } from '../shared/models/guestOrder';
 import { TabsetComponent } from 'ngx-bootstrap/tabs';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { ToastrService } from 'ngx-toastr';
 import { OrderMenuService } from './order-menu.service';
-import { HomeComponent } from '../home/home.component';
 
 
 @Component({
@@ -86,8 +85,8 @@ export class OrderComponent implements OnInit {
 
   ngAfterViewInit(): void {
     if (this.staticTabs) {
-      //this.staticTabs.tabs[1].disabled = true;
-      //this.staticTabs.tabs[2].disabled = true;
+      this.staticTabs.tabs[1].disabled = true;
+      this.staticTabs.tabs[2].disabled = true;
     }
   }
 

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { LoginGuest, RegisterGuest } from 'src/app/shared/models/guest';
+import { RegisterGuest } from 'src/app/shared/models/guest';
 import { AccountService } from '../account.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 

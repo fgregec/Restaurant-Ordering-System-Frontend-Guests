@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { LoginGuest, RegisterGuest, Guest } from '../shared/models/guest';
 import { BehaviorSubject } from 'rxjs';
-import { AllOrdersDto, MenuItem } from '../shared/models/guestOrder';
+import { AllOrdersDto } from '../shared/models/guestOrder';
 
 @Injectable({
   providedIn: 'root'
