@@ -7,9 +7,14 @@
             <h3 class="menu-item-title">{{menuItem.name}}</h3>
             <p class="menu-item-description">Classic old fashioned delicious pizza made in Italy.</p>
             <b>{{menuItem.price}}$</b>
+            <p>Quantity: {{menuItem.quantity}}</p>
         </div>
-        <div class="menu-item-buttons">
-            <button class="btn btn-primary" style="margin-left:5px;" (click)="addToOrder()">Add To Order</button>
+        <div class="menu-item-buttons" *ngIf="menuItem && menuItem.removedIngredients && menuItem.removedIngredients.length > 0">
+            <ul>
+                <li>Removed ingredients:</li>
+                <li *ngFor="let ingredient of menuItem.removedIngredients">{{ ingredient.name }}</li>
+            </ul>
         </div>
+        
     </div>
 </div>

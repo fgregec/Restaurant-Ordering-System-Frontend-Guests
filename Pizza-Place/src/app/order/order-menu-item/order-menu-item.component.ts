@@ -1,11 +1,9 @@
-import { Component, Input, TemplateRef } from '@angular/core';
+import { Component, EventEmitter, Input, Output, TemplateRef } from '@angular/core';
 import { MenuItem, Ingredient } from 'src/app/shared/models/guestOrder';
 import { OrderService } from '../order.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ChangeDetectorRef } from '@angular/core';
-
-import { shareReplay } from 'rxjs';
+import { OrderMenuService } from '../order-menu.service';
 
 
 @Component({
@@ -15,7 +13,9 @@ import { shareReplay } from 'rxjs';
 })
 export class OrderMenuItemComponent {
   @Input() menuItem! : MenuItem;
-  
+  @Input() dictionaryIndex! : string;
+  @Output() removeOrder = new EventEmitter<void>();
+    
   ingredients?: Ingredient[];
   quantity?: number = 1;
   removedIngredients?: Ingredient[] = [];
@@ -26,25 +26,22 @@ export class OrderMenuItemComponent {
     ignoreBackdropClick: false
   };
 
-  constructor(private orderService: OrderService, private modalService: BsModalService, private cdRef: ChangeDetectorRef) {}
+  constructor(private orderService: OrderService, private modalService: BsModalService, private orderMenuService: OrderMenuService) {
+  }
   
   menuForm = new FormGroup({
     quantity: new FormControl('', [Validators.required]),
   });
 
-
   ngOnInit(): void {
     if (this.menuItem) {
-      this.orderService.getMenuIngredients(this.menuItem.id).subscribe({
+      this.orderService.getMenuIngredients(this.menuItem.id ? this.menuItem.id:'0').subscribe({
         next: (ingredients) => {
           this.ingredients = ingredients;
         },
         error: (error) => {
           console.log('Error fetching menu ingredients:', error);
         },
-        complete: () => {
-          console.log('Observable completed.');
-        }
       });
 
       this.menuForm.controls['quantity'].valueChanges.subscribe((newValue) => {
@@ -53,6 +50,7 @@ export class OrderMenuItemComponent {
           this.quantity = 1;
           this.menuForm.controls['quantity'].setValue('1');
         }
+        this.updateOrder();
       });
     }
   }
@@ -66,6 +64,7 @@ export class OrderMenuItemComponent {
       this.removedIngredients?.push(ingredient);
       this.ingredients = this.ingredients.filter(item => item !== ingredient);
     }
+    this.updateOrder();
   }
 
   addBackIngredient(ingredient: Ingredient){
@@ -73,5 +72,27 @@ export class OrderMenuItemComponent {
       this.ingredients?.push(ingredient);
       this.removedIngredients = this.removedIngredients.filter(item => item !== ingredient);
     }
+    this.updateOrder();
   }
+
+  removeFromOrder(){
+    this.orderMenuService.deletePickedMenuItem(this.dictionaryIndex);
+    this.removeOrder.emit();
+  }
+
+  updateOrder(){
+    if (this.dictionaryIndex) {
+      const item: MenuItem = new MenuItem();
+      item.id = this.menuItem.id;
+      item.name = this.menuItem.name;
+      item.price = this.menuItem.price;
+      item.description = this.menuItem.description;
+      item.quantity = this.quantity;
+      item.icon = this.menuItem.icon;
+      item.removedIngredients = this.removedIngredients;
+
+      this.orderMenuService.setPickedMenuItems(this.dictionaryIndex, item);
+    }
+  }
+
 }

@@ -17,7 +17,7 @@ export class MenuItemComponent implements OnInit {
   constructor(private orderService: OrderService){}
   
   ngOnInit(): void {
-    if (this.menuItem) {
+    if (this.menuItem.id) {
       this.orderService.getMenuIngredients(this.menuItem.id).subscribe({
         next: (ingredients) => {
           this.ingredients = ingredients;

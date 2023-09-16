@@ -38,13 +38,10 @@ export class RegisterComponent {
       } as RegisterGuest;
       this.accountService.registerGuest(user).subscribe({
         next: (userInfo) => {
-          console.log('Registration successful:', userInfo);
-          // Redirect to the desired page upon successful login
-          this.router.navigate(['']);
+          this.router.navigate(['/login']);
         },
         error: (error) => {
           console.error('Registration failed:', error);
-          // Handle error, show error message, etc.
         }
       });
     } else {

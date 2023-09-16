@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { StripeService, StripeCardComponent } from 'ngx-stripe';
@@ -7,6 +7,7 @@ import {
   StripeElementsOptions
 } from '@stripe/stripe-js';
 import { HttpClient } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-stripe',
@@ -15,6 +16,9 @@ import { HttpClient } from '@angular/common/http';
 })
 export class StripeComponent {
   @ViewChild(StripeCardComponent) card!: StripeCardComponent;
+
+  @Input() totalPrice? : number;
+  @Output() paymentSuccessful = new EventEmitter<void>();
 
   cardOptions: StripeCardElementOptions = {
     hidePostalCode: true,
@@ -38,7 +42,7 @@ export class StripeComponent {
 
   stripeTest!: FormGroup;
 
-  constructor(private fb: FormBuilder, private stripeService: StripeService, private http: HttpClient) {}
+  constructor(private fb: FormBuilder, private stripeService: StripeService, private http: HttpClient, private toastr: ToastrService) {}
 
   ngOnInit(): void {
     this.stripeTest = this.fb.group({
@@ -62,21 +66,28 @@ export class StripeComponent {
   }
 
   callApi(token: string): void {
-    const apiUrl = 'http://localhost:5078/api/payment/charge'; // Change to your API URL
+    const apiUrl = 'http://localhost:5078/api/Payment/charge'; 
+    console.log(this.totalPrice)
+    if(this.totalPrice){
+      const payload = {
+        token: token, 
+        amount: Number(this.totalPrice * 100) 
+      };
 
-    const payload = {
-      token: token, // Send the token ID
-      amount: 2000 // Example: $20 in cents
-    };
+      this.http.post(apiUrl, payload).subscribe(
+        (response) => {
+          console.log(response); 
+          this.toastr.info('Payment Successful!','',{
+            positionClass: 'toast-bottom-right'
+          });
+          this.paymentSuccessful.emit();
+        },
+        (error) => {
+          console.log(error); 
+        }
+      );
+    }
 
-    this.http.post(apiUrl, payload).subscribe(
-      (response) => {
-        console.log(response); // Handle successful API response
-      },
-      (error) => {
-        console.log(error); // Handle API error
-      }
-    );
   }
 
 }

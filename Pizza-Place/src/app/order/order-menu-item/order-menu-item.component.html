@@ -8,12 +8,16 @@
             <h3 class="menu-item-title">{{menuItem.name}}</h3>
         </div>
         <div class="menu-item-buttons">
-            <button class="btn btn-primary" (click)="openModal(template)">Edit Ingredients</button>
+          <button class="btn btn-primary" (click)="openModal(template)">Edit Ingredients</button>
         </div>
+        <b>{{menuItem.price}}$</b>
         <div class="menu-item-buttons w-50">
           <label>Quantity:</label>
           <input type="number" class="form-control" formControlName="quantity" [(ngModel)]="quantity">
         </div>
+    </div>
+    <div class="d-flex justify-content-center align-items-center">
+      <button class="btn btn-warning" style="height: 20%;" (click)="removeFromOrder()">X</button>
     </div>
 </div>
 </form>
@@ -29,14 +33,14 @@
       <div class="d-flex flex-column col-6">
         <h4>Existing:</h4>
         <div *ngFor="let ingredient of ingredients">
-          <button class="btn btn-primary" (click)="removeIngredient(ingredient)">{{ingredient.name}}</button>
+          <button class="btn btn-primary" style="margin-bottom: 10px;" (click)="removeIngredient(ingredient)">{{ingredient.name}}</button>
         </div>
       </div>
       <div class="col-6 d-flex flex-column">
         <div>
           <h4>Removed:</h4>
           <div *ngFor="let removedIngredient of removedIngredients">
-            <button class="btn btn-warning" (click)="addBackIngredient(removedIngredient)">{{removedIngredient.name}}</button>
+            <button class="btn btn-warning" style="margin-bottom: 10px;" (click)="addBackIngredient(removedIngredient)">{{removedIngredient.name}}</button>
           </div>
         </div>
       </div>

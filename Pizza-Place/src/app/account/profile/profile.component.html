@@ -1,0 +1,33 @@
+<div class="m-5 d-flex flex-row" *ngIf="guest">
+    <div class="d-flex justify-content-center align-items-center">
+        <img src="../../../assets/profile.jpg" style="width:200px;object-fit: cover;" alt="">
+    </div>
+    <div class="d-flex justify-content-center align-items-center flex-column m-5">
+        <p>{{guest.firstName}} {{guest.lastName}}</p>
+        <p>{{guest.email}}</p>
+        <p>{{guest.phoneNumber}}</p>
+    </div>
+</div>
+<div *ngIf="previousOrders">
+    <h2>Previous orders: </h2>
+    <accordion [isAnimated]="true" class="w-50">
+        <div *ngFor="let order of previousOrders">
+            <div *ngIf="order.placedAt && order.placedFor && order.orderId">
+                <accordion-group heading="Order: {{order.orderId}} Placed: {{formatDate(order.placedAt)}}">
+                    <div  *ngFor="let menuItem of order.menuItems">
+                        <app-checkout-menu-item [menuItem]="menuItem"></app-checkout-menu-item>
+                    </div>  
+                    <div class="d-flex justify-content-center align-items-center">
+                        <b>Booked for: {{formatDate(order.placedFor)}}</b>
+                    </div>
+                    <div class="d-flex justify-content-center align-items-center">
+                        <b>Number of people: {{order.numberOfPeople}}</b>
+                    </div>
+                    <div class="d-flex justify-content-center align-items-center" *ngIf="order.orderStatus == orderStatus">
+                        <button class="btn btn-danger" *ngIf="checkCancelation(order.placedFor ? order.placedFor : '')" (click)="cancelOrder(order.orderId)">CANCEL ORDER</button>          
+                    </div>      
+                </accordion-group>
+            </div>
+        </div>
+    </accordion>
+</div>

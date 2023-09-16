@@ -22,6 +22,12 @@ import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { NgxStripeModule } from 'ngx-stripe';
 import { StripeComponent } from './stripe/stripe.component';
+import { CheckoutMenuItemComponent } from './order/checkout-menu-item/checkout-menu-item.component';
+
+import { ToastrModule } from 'ngx-toastr';
+import { ProfileComponent } from './account/profile/profile.component';
+import { AccordionModule } from 'ngx-bootstrap/accordion';
+
 
 @NgModule({
   declarations: [
@@ -34,6 +40,8 @@ import { StripeComponent } from './stripe/stripe.component';
     MenuItemComponent,
     OrderMenuItemComponent,
     StripeComponent,
+    CheckoutMenuItemComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -50,6 +58,8 @@ import { StripeComponent } from './stripe/stripe.component';
     TimepickerModule.forRoot(),
     AlertModule.forRoot(),
     NgxStripeModule.forRoot('pk_test_51MVytIFqBUpBtecpTPEEyF8CTV2ucDbGPj5iJmWteNhokAsk2SI7D1ihiY5ZRGhRefnfQb6OWqHNDX3Ti1CBOx6s00kfJu7ZOU'),
+    ToastrModule.forRoot(),
+    AccordionModule.forRoot(), 
   ],
   providers: [],
   bootstrap: [AppComponent]

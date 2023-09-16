@@ -29,19 +29,22 @@ login() {
       email: this.loginForm.controls['email'].value,
       password: this.loginForm.controls['password'].value,
     } as LoginGuest;
-    this.accountService.loginGuest(user).subscribe({
-      next: (userInfo) => {
-        console.log('Login successful:', userInfo);
-        // Redirect to the desired page upon successful login
-        this.router.navigate(['']);
-      },
-      error: (error) => {
-        console.error('Login failed:', error);
-        // Handle error, show error message, etc.
+
+  this.accountService.loginGuest(user).subscribe({
+    next: (userInfo) => {
+      this.accountService.updateGuest(userInfo);
+      localStorage.setItem('user', JSON.stringify(userInfo));
+      this.router.navigate(['/profile']);
+    },
+    error: error => {
+      {
+        console.log(error);
       }
-    });
-  } else {
-    this.loginForm.markAllAsTouched();
+    }
+  });
+} else{
+  this.loginForm.markAllAsTouched();
   }
-}
+
+  }
 }
