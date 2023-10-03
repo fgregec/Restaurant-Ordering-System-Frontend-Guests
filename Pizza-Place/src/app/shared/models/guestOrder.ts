@@ -51,5 +51,6 @@ export class AllOrdersDto{
 export enum OrderStatus{
     BOOKED = '0',
     CANCELED = '1',
-    SERVED = '2'
+    SERVED = '2',
+    IN_PROGRESS = '3'
 }
