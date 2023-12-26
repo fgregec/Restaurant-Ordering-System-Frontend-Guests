@@ -1,85 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
     <div class="d-flex justify-content-center">
-        <h1>Build your order!</h1>
+      <h1>Build your order!</h1>
     </div>
     <tabset [justified]="true" #staticTabs>
-        <tab heading="Table">
-            <div class="d-flex justify-content-center align-items-center flex-column m-5">
-                <h1>Table selector</h1>
-                <div>
-                    <label>Number of people:</label>
-                    <input type="number" class="form-control" #people />
-                </div>
-                <div>
-                    <label>Date:</label>
-                    <div class="">
-                        <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker [bsValue]="bsValue" [bsConfig]="bsConfig" [daysDisabled]="[6,0]" (bsValueChange)="onValueChange($event)">                    
-                    </div>    
-                    <label>Time:</label>
-                    <div>
-                        <div class="form-group mb-3">
-                            <timepicker [(ngModel)]="myTime" [min]="minTime" [max]="maxTime" [showMeridian]="false"></timepicker>
-                        </div>
-                    </div>        
-                </div>
-                <alert type="danger" *ngIf="showErrorAlert">
-                    <p>{{this.errorMessage}}</p>
-                </alert>
-                <button class="btn btn-primary" (click)="validateTable()">Proceed</button>
-            </div>
-        </tab>
-        <tab heading="Menu">
-            <div class="d-flex flex-row">
-                <div class="col-6 d-flex justify-content-center align-items-center flex-column">
-                    <h1>Menu:</h1>
-                    <div *ngFor="let menuItem of menuItems">
-                        <app-menu-item [menuItem]="menuItem" (orderAdded)="handleOrderAdded(menuItem)"></app-menu-item>
-                    </div>
-                </div>
-                <div class="col-6 d-flex justify-content-center align-items-center flex-column">
-                    <h1>Your order:</h1>
-                        <div *ngFor="let itemId of getPickedItemsKeys()">
-                            <app-order-menu-item
-                              [menuItem]="pickedMenuItemsDictionary[itemId]"
-                              [dictionaryIndex]="itemId"
-                              (removeOrder)="removeFromOrder(itemId)"
-                            ></app-order-menu-item>
-                        </div>
-                </div>
-            </div>
-            <div class="d-flex justify-content-center align-items-center flex-column">
-                <button class="btn btn-primary" (click)="validateMenu()">Confirm order</button>
-                <alert type="danger" *ngIf="emptyOrderAlert" class="m-1">
-                    <p>Your order can not be empty!</p>
-                </alert>
-            </div>
-        </tab>
-            <tab heading="Checkout">
-              <div class="d-flex justify-content-center align-items-center">
-                <h1>Checkout</h1>
-              </div>
-              <div class="d-flex flex-row">
-                <div class="col-6 d-flex justify-content-center align-items-center flex-column">
-                  <h1>Ordered Menu:</h1>
-                  <div *ngIf="showCheckout">
-                    <div *ngFor="let item of finalMenuItemArray">
-                        <app-checkout-menu-item [menuItem] = "item"></app-checkout-menu-item>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="d-flex justify-content-center align-items-center flex-column">
-                <h2>Total: {{ totalCheckout }}$</h2>
-                <app-stripe [totalPrice]="totalCheckout" (paymentSuccessful)="placeOrder()" style="width:500px;"></app-stripe>
-              </div>
-            </tab>          
+      <tab heading="Table">
+        <app-table-picker (validationSuccess)="swapTab(0)" />
+      </tab>
+      <tab heading="Menu">
+        <app-menu-maker (validationSuccess)="swapTab(1)" />
+      </tab>
+      <tab heading="Checkout">
+        <app-checkout/>
+      </tab>
     </tabset>
-</body>
+  </body>
 </html>
-

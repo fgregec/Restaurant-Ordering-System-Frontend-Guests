@@ -1,0 +1,33 @@
+<div class="d-flex flex-row">
+  <div
+    class="col-6 d-flex justify-content-center align-items-center flex-column"
+  >
+    <h1>Menu:</h1>
+    <div *ngFor="let menuItem of menuItems">
+      <app-menu-item
+        [menuItem]="menuItem"
+        (orderAdded)="handleOrderAdded(menuItem)"
+      ></app-menu-item>
+    </div>
+  </div>
+  <div
+    class="col-6 d-flex justify-content-center align-items-center flex-column"
+  >
+    <h1>Your order:</h1>
+    <div *ngFor="let itemId of getPickedItemsKeys()">
+      <app-order-menu-item
+        [menuItem]="pickedMenuItemsDictionary[itemId]"
+        [dictionaryIndex]="itemId"
+        (removeOrder)="removeFromOrder(itemId)"
+      ></app-order-menu-item>
+    </div>
+  </div>
+</div>
+<div class="d-flex justify-content-center align-items-center flex-column">
+  <button class="btn btn-primary" (click)="validateMenu()">
+    Confirm order
+  </button>
+  <alert type="danger" *ngIf="emptyOrderAlert" class="m-1">
+    <p>Your order can not be empty!</p>
+  </alert>
+</div>

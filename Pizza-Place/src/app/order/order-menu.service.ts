@@ -12,15 +12,15 @@ export class OrderMenuService {
   pickedMenuItemsDictionarySubject$: Observable<{[id: string]: MenuItem;}> = this.pickedMenuItemsDictionarySubject.asObservable();
 
   setPickedMenuItems(id: string, pickedItem: MenuItem) {
-    const currentDictionary = { ...this.pickedMenuItemsDictionarySubject.value }; // Create a copy of the current dictionary
-    currentDictionary[id] = pickedItem; // Set the item at the given ID
-    this.pickedMenuItemsDictionarySubject.next(currentDictionary); // Update the BehaviorSubject with the new dictionary
+    const currentDictionary = { ...this.pickedMenuItemsDictionarySubject.value }; 
+    currentDictionary[id] = pickedItem; 
+    this.pickedMenuItemsDictionarySubject.next(currentDictionary); 
   }
 
   deletePickedMenuItem(id: string) {
-    const currentDictionary = { ...this.pickedMenuItemsDictionarySubject.value }; // Create a copy of the current dictionary
-    delete currentDictionary[id]; // Delete the item at the given ID
-    this.pickedMenuItemsDictionarySubject.next(currentDictionary); // Update the BehaviorSubject with the new dictionary
+    const currentDictionary = { ...this.pickedMenuItemsDictionarySubject.value };
+    delete currentDictionary[id]; 
+    this.pickedMenuItemsDictionarySubject.next(currentDictionary);
   }
 
   getPickedMenuItemsArray(): MenuItem[] {
