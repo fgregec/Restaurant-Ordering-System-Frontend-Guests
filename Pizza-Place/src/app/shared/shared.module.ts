@@ -1,19 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CarouselModule } from 'ngx-bootstrap/carousel';
-import { ToastrModule } from 'ngx-toastr';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AccordionModule } from 'ngx-bootstrap/accordion';
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
-    CarouselModule.forRoot(),
-    BrowserAnimationsModule, // required animations module
-    ToastrModule.forRoot(), // ToastrModule added
+    FormsModule,
+    ReactiveFormsModule,
+    AccordionModule,
   ],
-  exports:[CarouselModule]
+  exports: [FormsModule, ReactiveFormsModule, AccordionModule],
 })
-export class SharedModule { }
+export class SharedModule {}

@@ -4,71 +4,27 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavBarComponent } from './shared/nav-bar/nav-bar.component';
-import { HomeComponent } from './home/home.component';
-import { CarouselModule } from 'ngx-bootstrap/carousel';
-import { SharedModule } from './shared/shared.module';
-import { LoginComponent } from './account/login/login.component';
-import { RegisterComponent } from './account/register/register.component';
-import { OrderComponent } from './order/order.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
-import { ModalModule } from 'ngx-bootstrap/modal';
-import { TabsModule } from 'ngx-bootstrap/tabs';
-import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { TimepickerModule } from 'ngx-bootstrap/timepicker';
-import { AlertModule } from 'ngx-bootstrap/alert';
-import { NgxStripeModule } from 'ngx-stripe';
-import { StripeComponent } from './stripe/stripe.component';
+import { AccountModule } from './account/account.module';
+import { HomeModule } from './home/home.module';
+import { OrderModule } from './order/order.module';
 
-import { CheckoutMenuItemComponent } from './order/items/checkout-menu-item/checkout-menu-item.component';
-import { MenuItemComponent } from './order/items/menu-item/menu-item.component';
-import { OrderMenuItemComponent } from './order/items/order-menu-item/order-menu-item.component';
-
-import { ToastrModule } from 'ngx-toastr';
-import { ProfileComponent } from './account/profile/profile.component';
-import { AccordionModule } from 'ngx-bootstrap/accordion';
-import { TablePickerComponent } from './order/orderSteps/table-picker/table-picker.component';
-import { MenuMakerComponent } from './order/orderSteps/menu-maker/menu-maker.component';
-import { CheckoutComponent } from './order/orderSteps/checkout/checkout.component';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavBarComponent,
-    HomeComponent,
-    LoginComponent,
-    RegisterComponent,
-    OrderComponent,
-    MenuItemComponent,
-    OrderMenuItemComponent,
-    StripeComponent,
-    CheckoutMenuItemComponent,
-    ProfileComponent,
-    TablePickerComponent,
-    MenuMakerComponent,
-    CheckoutComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    CarouselModule.forRoot(),
-    FormsModule,
-    ReactiveFormsModule,
     HttpClientModule,
     SharedModule,
-    ModalModule.forRoot(),
-    TabsModule.forRoot(),
-    BsDatepickerModule.forRoot(),
-    BrowserAnimationsModule,
-    TimepickerModule.forRoot(),
-    AlertModule.forRoot(),
-    NgxStripeModule.forRoot(
-      'pk_test_51MVytIFqBUpBtecpTPEEyF8CTV2ucDbGPj5iJmWteNhokAsk2SI7D1ihiY5ZRGhRefnfQb6OWqHNDX3Ti1CBOx6s00kfJu7ZOU'
-    ),
-    ToastrModule.forRoot(),
-    AccordionModule.forRoot(),
+    AccountModule,
+    HomeModule,
+    OrderModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

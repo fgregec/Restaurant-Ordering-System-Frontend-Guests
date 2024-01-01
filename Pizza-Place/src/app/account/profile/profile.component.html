@@ -15,7 +15,8 @@
             <div *ngIf="order.placedAt && order.placedFor && order.orderId">
                 <accordion-group heading="Order: {{order.orderId}} Placed: {{formatDate(order.placedAt)}}">
                     <div  *ngFor="let menuItem of order.menuItems">
-                        <app-checkout-menu-item [menuItem]="menuItem"></app-checkout-menu-item>
+                        <!-- UPDATE REQUIRED-->
+                        <!-- <app-checkout-menu-item [menuItem]="menuItem"></app-checkout-menu-item> -->
                     </div>  
                     <div class="d-flex justify-content-center align-items-center">
                         <b>Booked for: {{formatDate(order.placedFor)}}</b>
