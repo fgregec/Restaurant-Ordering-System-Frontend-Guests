@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 import { StripeComponent } from '../stripe/stripe.component';
 import { CheckoutMenuItemComponent } from './items/checkout-menu-item/checkout-menu-item.component';
@@ -11,7 +10,6 @@ import { CheckoutComponent } from './orderSteps/checkout/checkout.component';
 import { MenuMakerComponent } from './orderSteps/menu-maker/menu-maker.component';
 import { TablePickerComponent } from './orderSteps/table-picker/table-picker.component';
 
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ModalModule } from 'ngx-bootstrap/modal';
@@ -33,18 +31,16 @@ import { SharedModule } from '../shared/shared.module';
     CheckoutComponent,
   ],
   imports: [
-    CommonModule,
     ModalModule,
     TabsModule,
     BsDatepickerModule,
-    BrowserAnimationsModule,
     TimepickerModule,
     AlertModule,
     NgxStripeModule.forRoot(
       'pk_test_51MVytIFqBUpBtecpTPEEyF8CTV2ucDbGPj5iJmWteNhokAsk2SI7D1ihiY5ZRGhRefnfQb6OWqHNDX3Ti1CBOx6s00kfJu7ZOU'
     ),
-    ToastrModule,
-    SharedModule
+    ToastrModule.forRoot(),
+    SharedModule,
   ],
 })
 export class OrderModule {}

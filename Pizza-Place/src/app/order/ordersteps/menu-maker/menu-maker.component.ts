@@ -6,7 +6,6 @@ import { OrderMenuService } from '../../order-menu.service';
 @Component({
   selector: 'app-menu-maker',
   templateUrl: './menu-maker.component.html',
-  styleUrls: ['./menu-maker.component.css'],
 })
 export class MenuMakerComponent implements OnInit {
   @Output() validationSuccess = new EventEmitter<boolean>();

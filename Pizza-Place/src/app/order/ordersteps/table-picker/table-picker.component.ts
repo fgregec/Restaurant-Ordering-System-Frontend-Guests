@@ -4,7 +4,6 @@ import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 @Component({
   selector: 'app-table-picker',
   templateUrl: './table-picker.component.html',
-  styleUrls: ['./table-picker.component.css'],
 })
 export class TablePickerComponent {
   bsConfig?: Partial<BsDatepickerConfig>;

@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { OrderService } from './order.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -10,7 +10,6 @@ import { OrderMenuService } from './order-menu.service';
 @Component({
   selector: 'app-order',
   templateUrl: './order.component.html',
-  styleUrls: ['./order.component.css'],
 })
 export class OrderComponent {
   @ViewChild('error') error!: ElementRef;
@@ -24,7 +23,6 @@ export class OrderComponent {
   errorMessage?: string;
 
   handler: any = null;
-
 
   constructor(
     private orderService: OrderService,
@@ -84,5 +82,4 @@ export class OrderComponent {
   //       );
   //   }
   // }
-
 }

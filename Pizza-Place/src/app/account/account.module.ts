@@ -6,6 +6,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { RegisterComponent } from './register/register.component';
 
 import { SharedModule } from '../shared/shared.module';
+import { AccountRoutingModule } from './account-routing.module';
 
 
 
@@ -14,6 +15,7 @@ import { SharedModule } from '../shared/shared.module';
   imports: [
     CommonModule,
     SharedModule,
+    AccountRoutingModule
   ]
 })
 export class AccountModule { }

@@ -5,7 +5,6 @@ import { MenuItem } from 'src/app/shared/models/guestOrder';
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
-  styleUrls: ['./checkout.component.css'],
 })
 export class CheckoutComponent implements OnInit {
   finalMenuItemArray?: MenuItem[] = [];
